@@ -54,9 +54,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "knox",
-    # "djcelery",
-    # "django_celery_results",
-    "django_celery_beat",
+    # "django_celery_beat",
     "news",
 ]
 
