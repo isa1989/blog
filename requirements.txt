@@ -10,3 +10,5 @@ djangorestframework==3.13.1
 # django-celery-beat==1.5.0
 # tzdata ==2022.1
 django-heroku==0.3.1
+django-staticfiles==1.2.1
+
