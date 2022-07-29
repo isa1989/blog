@@ -46,8 +46,8 @@ def debug_task(self):
 
 
 app.conf.beat_schedule = {
-    "milli_bank_get_currencies": {
-        "task": "blog.tasks.bank_currency_parser",
+    "all_post_upvotes_delete": {
+        "task": "blog.tasks.all_upvotes_delete",
         "schedule": crontab(
             minute="*", hour="*", day_of_month="*", month_of_year="*", day_of_week="*"
         ),

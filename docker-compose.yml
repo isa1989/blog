@@ -25,9 +25,7 @@ services:
     restart: "always"
     build: .
     image: celery
-    command: celery --app=blog.celery:app worker -B --loglevel=INFO
-    volumes:
-      - .:/code
+    command: celery --app=blog.celery:app worker -B --loglevel=DEBUG
     depends_on:
       - redis
       - db

@@ -1,14 +1,12 @@
 django==2.2
 django-rest-knox==3.6.0
 djangorestframework==3.13.1
-# factory-boy==3.2.1
-# Faker==13.15.1
-# psycopg2==2.8.3
-# python-dotenv==0.20.0
-# celery==4.3.0
-# redis==3.3.11
-# django-celery-beat==1.5.0
-# tzdata ==2022.1
-django-heroku==0.3.1
-django-staticfiles==1.2.1
+factory-boy==3.2.1
+Faker==13.15.1
+psycopg2==2.8.3
+python-dotenv==0.20.0
+celery==4.3.0
+redis==3.3.11
+django-celery-beat==1.5.0
+tzdata ==2022.1
 
