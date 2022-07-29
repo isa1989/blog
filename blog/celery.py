@@ -49,7 +49,7 @@ app.conf.beat_schedule = {
     "all_post_upvotes_delete": {
         "task": "blog.tasks.all_upvotes_delete",
         "schedule": crontab(
-            minute="*", hour="*", day_of_month="*", month_of_year="*", day_of_week="*"
-        ),
+            minute="0", hour="0", day_of_month="*", month_of_year="*", day_of_week="*"
+        )
     }
 }
