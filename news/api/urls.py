@@ -1,5 +1,5 @@
 from django.urls import include, path
-from news.api.views import PostViewSet, CommentViewSet, UpvoteViewSet
+from news.api.views import PostViewSet, CommentViewSet, UpvoteViewSet, LoginAPIView
 
 app_name = "api"
 
@@ -16,6 +16,7 @@ upvote_list = UpvoteViewSet.as_view({"get": "list", "post": "create"})
 upvote_detail = UpvoteViewSet.as_view({"delete": "destroy"})
 
 urlpatterns = [
+    path("login/", LoginAPIView.as_view(), name="login"),
     path("posts/", post_list, name="post-list"),
     path("post/<int:pk>/", post_detail, name="post-detail"),
     path("comments/", comment_list, name="comment-list"),

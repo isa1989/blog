@@ -1,13 +1,28 @@
 from dataclasses import field
-from multiprocessing import managers
+from django.contrib.auth import authenticate
+
 from news.models import Post, User, Comment, Upvote
-from rest_framework import routers, serializers, viewsets
+from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "username", "email")
+
+
+class LoginUserSerializer(serializers.Serializer):
+
+    username = serializers.CharField(max_length=255)
+    password = serializers.CharField(max_length=128, write_only=True)
+
+    def validate(self, data):
+        username = data.get("username", None)
+        password = data.get("password", None)
+        user = authenticate(username=username, password=password)
+        data["user"] = user
+
+        return data
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -18,6 +33,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    author_name = UserSerializer(read_only=True)
+
     class Meta:
         model = Comment
         fields = "__all__"
@@ -29,6 +46,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class UpvoteSerializer(serializers.ModelSerializer):
+    author = UserSerializer(read_only=True)
+
     class Meta:
         model = Upvote
         fields = "__all__"
@@ -40,6 +59,7 @@ class UpvoteSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    author_name = UserSerializer(read_only=True)
     comments = CommentSerializer(many=True, required=False)
     upvotes_count = serializers.SerializerMethodField()
 

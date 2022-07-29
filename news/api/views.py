@@ -1,9 +1,14 @@
 from django.shortcuts import render
 from rest_framework import serializers, viewsets, generics, permissions
 from rest_framework.response import Response
+from django.http import JsonResponse
 from knox.models import AuthToken
+from django.contrib.auth import login as auth_login
+
 
 from news.models import User, Post, Comment, Upvote
+from rest_framework.views import APIView
+
 
 from news.api.permissions import IsOwner
 
@@ -14,6 +19,7 @@ from news.api.serializers import (
     UpvoteSerializer,
     RegisterSerializer,
     UserSerializer,
+    LoginUserSerializer,
 )
 
 import logging
@@ -86,3 +92,23 @@ class RegisterAPI(generics.GenericAPIView):
                 "token": AuthToken.objects.create(user)[1],
             }
         )
+
+
+class LoginAPIView(generics.GenericAPIView):
+    serializer_class = LoginUserSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return JsonResponse(serializer.errors, status=400)
+
+        user = serializer.validated_data["user"]
+        response = JsonResponse(
+            {
+                "user": UserSerializer(
+                    user, context=self.get_serializer_context()
+                ).data,
+                "token": AuthToken.objects.create(user)[1],
+            }
+        )
+        return response
