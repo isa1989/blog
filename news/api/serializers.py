@@ -17,12 +17,12 @@ class LoginUserSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=128, write_only=True)
 
     def validate(self, data):
-        username = data.get("username", None)
-        password = data.get("password", None)
-        user = authenticate(username=username, password=password)
-        data["user"] = user
+        user = authenticate(**data)
 
-        return data
+        if user and user.is_active:
+            return user
+
+        raise serializers.ValidationError("Unable to log in with provided credentials.")
 
 
 class RegisterSerializer(serializers.ModelSerializer):

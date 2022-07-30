@@ -96,13 +96,14 @@ class RegisterAPI(generics.GenericAPIView):
 
 class LoginAPIView(generics.GenericAPIView):
     serializer_class = LoginUserSerializer
+    permission_classes = (permissions.AllowAny,)
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
             return JsonResponse(serializer.errors, status=400)
 
-        user = serializer.validated_data["user"]
+        user = serializer.validated_data
         response = JsonResponse(
             {
                 "user": UserSerializer(
