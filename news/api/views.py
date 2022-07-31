@@ -95,6 +95,7 @@ class RegisterAPI(generics.GenericAPIView):
 
 
 class LoginAPIView(generics.GenericAPIView):
+    queryser=Post.objects.all()
     serializer_class = LoginUserSerializer
     permission_classes = (permissions.AllowAny,)
 

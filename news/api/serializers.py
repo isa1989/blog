@@ -5,6 +5,7 @@ from news.models import Post, User, Comment, Upvote
 from rest_framework import serializers
 
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -52,6 +53,10 @@ class UpvoteSerializer(serializers.ModelSerializer):
         model = Upvote
         fields = "__all__"
 
+    def validate_post(self, value):
+        if Upvote.objects.filter(post=value).exists():
+            raise serializers.ValidationError("You upvoted")
+
     def create(self, validated_data):
         user = self.context["request"].user
         validated_data.update(author=user)
@@ -66,6 +71,11 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ("author_name", "title", "link", "comments", "upvotes_count")
+        
+
+    def validate(self,data):
+        if Post.objects.filter(**data).exists():
+            raise serializers.ValidationError("This post is alredy exists!")
 
     def get_upvotes_count(self, obj):
         return obj.upvotes.all().count()
