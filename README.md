@@ -7,7 +7,7 @@ docker-compose up --build
 
 3.project global 
 http://isaram.pythonanywhere.com/
--post list and create http://isaram.pythonanywhere.com/posts/
+-post list and create http://isaram.pythonanywhere.com/posts/                                                                                               
 -post update delete http://isaram.pythonanywhere.com/post/1/
 -comment list and create http://isaram.pythonanywhere.com/comments/
 -comment update delete http://isaram.pythonanywhere.com/comment/1/
